@@ -3,9 +3,9 @@
 '''
 
 # 読み込み用ファイル
-R_FILE = "/home/pi/julius/dict/format.txt"
+R_FILE = "/home/pi/tanaka/julius/dict/format.txt"
 # 書き込み用ファイル
-W_FILE = "/home/pi/julius/dict/word_chain.grammar"
+W_FILE = "/home/pi/tanaka/julius/dict/word_chain.grammar"
 
 with open(R_FILE, mode = "r") as f:
     data = [v.rstrip() for v in f.readlines()]
