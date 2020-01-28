@@ -1,0 +1,49 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:556: checking for a BSD compatible install
+configure:611: checking for rm
+configure:646: checking for perl
+configure:679: checking for Cygwin environment
+configure:695: cc -c   conftest.c 1>&5
+configure: In function 'main':
+configure:689:20: error: '__CYGWIN32__' undeclared (first use in this function); did you mean '__LINE__'?
+ #define __CYGWIN__ __CYGWIN32__
+                    ^~~~~~~~~~~~
+configure:691:8: note: in expansion of macro '__CYGWIN__'
+ return __CYGWIN__;
+        ^~~~~~~~~~
+configure:689:20: note: each undeclared identifier is reported only once for each function it appears in
+ #define __CYGWIN__ __CYGWIN32__
+                    ^~~~~~~~~~~~
+configure:691:8: note: in expansion of macro '__CYGWIN__'
+ return __CYGWIN__;
+        ^~~~~~~~~~
+configure: failed program was:
+#line 684 "configure"
+#include "confdefs.h"
+
+int main() {
+
+#ifndef __CYGWIN__
+#define __CYGWIN__ __CYGWIN32__
+#endif
+return __CYGWIN__;
+; return 0; }
+configure:712: checking for mingw32 environment
+configure:724: cc -c   conftest.c 1>&5
+configure: In function 'main':
+configure:720:8: error: '__MINGW32__' undeclared (first use in this function); did you mean '__LINE__'?
+ return __MINGW32__;
+        ^~~~~~~~~~~
+        __LINE__
+configure:720:8: note: each undeclared identifier is reported only once for each function it appears in
+configure: failed program was:
+#line 717 "configure"
+#include "confdefs.h"
+
+int main() {
+return __MINGW32__;
+; return 0; }
+configure:743: checking for executable suffix
+configure:753: cc -o conftest    conftest.c  1>&5
