@@ -68,13 +68,13 @@ def shiritori(player_word):
             return player_word
 
 def listen():
-    print("YOUR TURN >> ",end='')
+    print("\rYOUR TURN  >>> ",end='')
     socket.sendall(b"RESUME\n")
     data = ""
     while(data.find('</SHYPO>') == -1):
         data += socket.recv(1024).decode("utf-8")
         time.sleep(1)
-        player_word=''
+        #player_word=''
         for line in data.split('\n'):
             index = line.find('WORD=')
             if index != -1:
@@ -82,16 +82,18 @@ def listen():
                 if line != '[s]' and line != '[/s]':
                     player_word = line
                     print(player_word)
-                    flag = input("if not! input n!")
+                    #socket.sendall(b"PAUSE\n")
+                    flag = input("Is this right? [Enter/n] ")
                     if flag == "":
                         array.append(player_word)
+                        return player_word
                     else:
-                        listen()
-    socket.sendall(b"PAUSE\n")
-    return player_word
+                        player_word=''
+                        return listen()
 
 def check(word):
     player_word=listen()
+    #import pdb; pdb.set_trace()
     while word[len(word)-1]!=player_word[0]:
             say(word[len(word)-1]+"からはじまって")
             time.sleep(1)
@@ -125,46 +127,16 @@ def say(text):
 
 ### Execute
 if __name__ == "__main__":
-    socket.sendall(b"PAUSE\n")
-    read_dec()
-    word="しりとり"
-    say(word)
-    word=check(word)
     try:
+        socket.sendall(b"PAUSE\n")
+        read_dec()
+        word="しりとり"
+        say(word)
+        word=check(word)
         while True:
             word=shiritori(word)
     except KeyboardInterrupt:
         #write_file()
+        print("disconnect")
         socket.close()
 
-
-"""
-array=[]
-data = ''
-try:
-    while True:
-        while(data.find('</SHYPO>') == -1):
-            data += socket.recv(1024).decode("utf-8")
-        time.sleep(1)
-        word=''
-        for line in data.split('\n'):
-            index = line.find('WORD=')
-            if index != -1:
-                line = line[index + 6: line.find('"',index + 6)]
-                if line != '[s]' and line != '[/s]':
-                    word += line
-                    print(word)
-                    array.append(word)
-    
-        data = ''
-        cmd = "sh jtalk.sh "+word
-        time.sleep(1)
-        subprocess.Popen(cmd.split())
-except KeyboardInterrupt:
-    with open("result.txt","wt") as f:
-        for w in array:
-            f.write(w+"\n")
-"""
-#    command = ["sh /home/pi/sh_file/jtalk.sh", word]
-#    subprocess.call(command)
-#    time.sleep(1)
